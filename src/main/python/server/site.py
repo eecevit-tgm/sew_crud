@@ -28,10 +28,10 @@ class User(Resource):
         del USERS[usernmane]
         return '', 204
 
-    def put(self, usernmane):
+    def put(self, username):
         args = parser.parse_args()
-        usernmane = {'id':args['id'], 'username': args['username'], 'email':args['email']}
-        USERS[usernmane] = usernmane
+        user = {'username': args['username'],}
+        USERS[username] = user
         return user, 201
 
 
