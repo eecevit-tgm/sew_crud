@@ -4,58 +4,55 @@ from flask_restful import reqparse, abort, Api, Resource
 app = Flask(__name__)
 api = Api(app)
 
-TODOS = {
-    'todo1': {'task': 'build an API'},
-    'todo2': {'task': '?????'},
-    'todo3': {'task': 'profit!'},
+USERS = {
+    'eecevit':{'id':1, 'username': 'eecevit', 'email':'eecevit@student.tgm.ac.at'}
 }
 
-
-def abort_if_todo_doesnt_exist(todo_id):
-    if todo_id not in TODOS:
-        abort(404, message="Todo {} doesn't exist".format(todo_id))
+def abort_if_user_doesnt_exist(usernmane):
+    if usernmane not in USERS:
+        abort(404, message="User {} doesn't exist".format(usernmane))
 
 parser = reqparse.RequestParser()
-parser.add_argument('task')
+parser.add_argument('user')
 
 
 # Todo
-# shows a single todo item and lets you delete a todo item
-class Todo(Resource):
-    def get(self, todo_id):
-        abort_if_todo_doesnt_exist(todo_id)
-        return TODOS[todo_id]
+# shows a single user item and lets you delete a user item
+class User(Resource):
+    def get(self, usernmane):
+        abort_if_user_doesnt_exist(usernmane)
+        return USERS[usernmane]
 
-    def delete(self, todo_id):
-        abort_if_todo_doesnt_exist(todo_id)
-        del TODOS[todo_id]
+    def delete(self, usernmane):
+        abort_if_user_doesnt_exist(usernmane)
+        del USERS[usernmane]
         return '', 204
 
-    def put(self, todo_id):
+    def put(self, usernmane):
         args = parser.parse_args()
-        task = {'task': args['task']}
-        TODOS[todo_id] = task
-        return task, 201
+        usernmane = {'id':args['id'], 'username': args['username'], 'email':args['email']}
+        USERS[usernmane] = usernmane
+        return user, 201
 
 
-# TodoList
-# shows a list of all todos, and lets you POST to add new tasks
-class TodoList(Resource):
+# Userlist
+# shows a list of all users, and lets you POST to add new user
+class UserList(Resource):
     def get(self):
-        return TODOS
+        return USERS
 
     def post(self):
         args = parser.parse_args()
-        todo_id = int(max(TODOS.keys()).lstrip('todo')) + 1
-        todo_id = 'todo%i' % todo_id
-        TODOS[todo_id] = {'task': args['task']}
-        return TODOS[todo_id], 201
+        usernmane = int(max(USERS.keys()).lstrip('user')) + 1
+        usernmane = 'user:%i' % usernmane
+        USERS[usernmane] = {'task': args['task']}
+        return USERS[usernmane], 201
 
 ##
 ## Actually setup the Api resource routing here
 ##
-api.add_resource(TodoList, '/todos')
-api.add_resource(Todo, '/todos/<todo_id>')
+api.add_resource(UserList, '/user')
+api.add_resource(User, '/users/<usernmane>')
 
 
 if __name__ == '__main__':
