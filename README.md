@@ -6,7 +6,7 @@ Die detaillierte [Aufgabenstellung](TASK.md) beschreibt die notwendigen Schritte
 ## Implementierung
 Es wurde für die Umsetzung Flask,Flask-Restful verwendet. 
 
-
+Es werden alle Daten in einem JSON File abgespeichert.
 
 
 ## Quellen

@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
+from main.python.server import jreader
 
 app = Flask(__name__)
 api = Api(app)
 
-USERS = {
-    'eecevit':{'id':1, 'username': 'eecevit', 'email':'eecevit@student.tgm.ac.at'}
-}
+data = jreader
+USERS = data.reader()
 
 def abort_if_user_doesnt_exist(usernmane):
     if usernmane not in USERS:
@@ -14,6 +14,7 @@ def abort_if_user_doesnt_exist(usernmane):
 
 parser = reqparse.RequestParser()
 parser.add_argument('user')
+
 
 
 # Todo
@@ -26,11 +27,12 @@ class User(Resource):
     def delete(self, usernmane):
         abort_if_user_doesnt_exist(usernmane)
         del USERS[usernmane]
+        data.deleate(usernmane)
         return '', 204
 
     def put(self, username):
         args = parser.parse_args()
-        user = {'username': args['username'],}
+        user = {'username': args['username']}
         USERS[username] = user
         return user, 201
 
@@ -43,16 +45,18 @@ class UserList(Resource):
 
     def post(self):
         args = parser.parse_args()
-        usernmane = int(max(USERS.keys()).lstrip('user')) + 1
-        usernmane = 'user:%i' % usernmane
-        USERS[usernmane] = {'task': args['task']}
-        return USERS[usernmane], 201
+        id = len(USERS)+1
+        name = args['user'].split(",")
+        USERS[name[0]] = {'id':id,'username': name[0], 'email':name[1]}
+        data.writer(USERS)
+        return USERS[name[0]], 201
+
 
 ##
 ## Actually setup the Api resource routing here
 ##
 api.add_resource(UserList, '/user')
-api.add_resource(User, '/users/<usernmane>')
+api.add_resource(User, '/user/<usernmane>')
 
 
 if __name__ == '__main__':
