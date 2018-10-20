@@ -1,11 +1,11 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
-from main.python.server import jreader
+from main.python.server import jreader, encoder
 
 app = Flask(__name__)
 api = Api(app)
-
 data = jreader
+
 USERS = data.reader()
 
 def abort_if_user_doesnt_exist(usernmane):
@@ -17,7 +17,7 @@ parser.add_argument('user')
 
 
 
-# Todo
+# Users
 # shows a single user item and lets you delete a user item
 class User(Resource):
     def get(self, usernmane):
@@ -32,7 +32,8 @@ class User(Resource):
 
     def put(self, username):
         args = parser.parse_args()
-        user = {'username': args['username']}
+        name = args['user'].split(",")
+        user = {'username': name[0],'email':name[1]}
         USERS[username] = user
         return user, 201
 
@@ -47,6 +48,8 @@ class UserList(Resource):
         args = parser.parse_args()
         id = len(USERS)+1
         name = args['user'].split(",")
+        image = encoder.encode(name[2])
+        print(image.toString)
         USERS[name[0]] = {'id':id,'username': name[0], 'email':name[1]}
         data.writer(USERS)
         return USERS[name[0]], 201
