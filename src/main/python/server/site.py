@@ -48,9 +48,8 @@ class UserList(Resource):
         args = parser.parse_args()
         id = len(USERS)+1
         name = args['user'].split(",")
-        image = encoder.encode(name[2])
-        print(image.toString)
-        USERS[name[0]] = {'id':id,'username': name[0], 'email':name[1]}
+        image = str(encoder.encode(name[2]))
+        USERS[name[0]] = {'id':id,'username': name[0], 'email':name[1],'picture':image}
         data.writer(USERS)
         return USERS[name[0]], 201
 
