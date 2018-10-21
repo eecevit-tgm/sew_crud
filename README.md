@@ -5,7 +5,25 @@ Die detaillierte [Aufgabenstellung](TASK.md) beschreibt die notwendigen Schritte
 
 ## Implementierung
 Für die Implementierung des Servers wurde Flask verwendet.
-Auf die Applikation kann nun mittels curl http://localhost:5000 zugegriffen werden.
+Auf die Applikation kann nun mittels 
+```
+curl http://localhost:5000
+```
+zugegriffen werden.
+
+Mögliche befehle
+```
+curl http://localhost:5000/user
+
+curl http://localhost:5000/user/<username>
+
+curl http://localhost:5000/user/<username> -X DELETE -v
+
+curl http://localhost:5000/user/<username> -d "name=updateName, update@mail.at, <image path.datatype> -X PUT -v
+
+curl http://localhost:5000/user -d "name=newUser, newUser@mail.at, <image path.datatype> -X POST -v
+
+```
 
 Damit alles Persistiert werden kann, wurde ein user.json File erstell.
 Um auf CRUD Befehle ausführen zu können wurde das jreader.py File erstellt.
