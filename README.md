@@ -25,8 +25,8 @@ curl http://localhost:5000/user -d "name=newUser, newUser@mail.at, <image path.d
 
 ```
 
-Damit alles Persistiert werden kann, wurde ein user.json File erstell.
-Um auf CRUD Befehle ausführen zu können wurde das jreader.py File erstellt.
+Damit alles Persistiert werden kann, wurde ein user.json File erstell.\
+Um CRUD Befehle ausführen zu können wurde das jreader.py File erstellt.
 
 Damit user auch ein Profilbild haben können, wurde eine encoder geschrieben, welcher ein Bild in base64
 encoded.
