@@ -7,7 +7,7 @@
 
 """
 
-from flask import Flask
+from flask import Flask,jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from main.python.server import jreader, encoder
 
@@ -33,7 +33,7 @@ parser.add_argument('user')
 
 class User(Resource):
 
-    def get(self, username):
+    def GET(self, username):
         """
         **Get information of a specific user**
 
@@ -152,6 +152,7 @@ class UserList(Resource):
         USERS[name[0]] = {'id':id,'username': name[0], 'email':name[1],'picture':image}
         data.writer(USERS)
         return USERS[name[0]], 201
+
 
 
 ##
