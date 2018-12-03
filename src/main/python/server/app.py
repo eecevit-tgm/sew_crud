@@ -20,7 +20,7 @@ User = data.reader()
 
 # sanity check route
 @app.route('/user', methods=['GET', 'POST'])
-def all_books():
+def all_users():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()

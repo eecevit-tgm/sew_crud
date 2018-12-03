@@ -124,7 +124,7 @@ class UserList(Resource):
                     "elshal": {"id": "4", "username": "eecevit", "email": "eecevit@student.tgm.ac.at", "picture": "...."}
                 }
         """
-        return USERS
+        return jsonify(USERS)
 
     def post(self):
         """
