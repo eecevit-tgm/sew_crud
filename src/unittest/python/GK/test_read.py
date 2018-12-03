@@ -2,12 +2,6 @@ import pytest
 import server.site
 
 
-@pytest.yield_fixture(autouse=True)
-def run_around_tests():
-    file = open('user.json', "w+")
-    file.write('[]')
-
-
 @pytest.fixture
 def client():
     server.site.app.testing = True
@@ -15,6 +9,6 @@ def client():
     yield client
 
 
-def get_all(client):
+def test_readall(client):
     res = client.get('/user')
-    assert res.json == {}
+    assert res.json == [{"username": "eecevit", "email": "eecevit@student.tgm.ac.at", "picture": "ds"}]
