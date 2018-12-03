@@ -1,0 +1,7 @@
+    pytest
+    pytest-cov
+    pytest-html
+    flask
+    flask_cors
+    flask_restful
+    sphinx >= 1.7.5, < 2
